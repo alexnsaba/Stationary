@@ -135,7 +135,7 @@ session_start();
 		  
         </li>
 		
-		  <li class="active treeview">
+	<li class="active treeview">
           <a href="#">
             <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
             <span class="pull-right-container">
@@ -144,13 +144,13 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newProducts.php"><i class="fa fa-circle-o"></i> Stoke-In</a></li>           
-			<li><a href="#"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
-			<li><a href="#"><i class="fa fa-edit"></i>Edit Products</a></li>		
-		   </ul>
-		  
+      <li><a href="availableProducts.php"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
+      <li><a href="productEdit.php"><i class="fa fa-edit"></i>Edit Products</a></li>    
+       </ul>
+      
         </li>
-		
-		 <li class="active treeview">
+    
+     <li class="active treeview">
           <a href="#">
             <i class="fa fa-cc-mastercard"></i> <span>SALES</span>
             <span class="pull-right-container">
@@ -159,11 +159,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newTransaction.php"><i class="fa fa-plus"></i>New Transaction</a></li>
-			<li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
+      <li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
             <li><a href="transactionEdit.php"><i class="fa fa-edit"></i> Edit Transaction</a></li>
-			<li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>			
+      <li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>     
           </ul>
-		  
+      
         </li>
 		
 		<li class="active treeview">
@@ -220,72 +220,87 @@ session_start();
     <!-- Main content -->
     <section class="content">
 	<!--Put your page content here-->
-		<center><h1>RECENT TRANSACTIONS</h1></center>
-   <center>
-   <?php
-   require_once 'database.php';
-   $sel = mysqli_query($con,"select * from transaction");
-   $num= mysqli_num_rows($sel);
-   if($num >0){
-	echo"<div class='box'>";
-	echo"<div class='box-body'>";
-	echo"<table  id='example1' class='table table-bordered table-striped'>";
-	echo"<thead>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</thead>";
-	echo"<tbody>";
-	while($row= mysqli_fetch_array($sel)){
-		echo"<tr>";
-	echo"<td>".$row['TransactionId']."</td>";	
-	echo"<td>".$row['productName']."</td>";
-	echo"<td>".$row['Amount']."</td>";
-	echo"<td>".$row['quantity']."</td>";
-	echo"<td>".$row['date']."</td>";
-	echo"<td>".$row['type']."</td>";
-	echo"<td>".$row['customerName']."</td>";
-	echo"<td>".$row['customer_phone']."</td>";
-	echo"<td>".$row['SalesMan_name']."</td>";
-	echo"</tr>";		
-	}
-	echo"</tbody>";
-	echo"<tfoot>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</tfoot>";
-	
-	echo"</table>";
-	echo"</div>";
-	echo"</div>";
-   }else{
-	   echo"<center><h2>No transaction records are available</h2></center>";
-   }
-	mysqli_close($con);
-	?>
-  <center>
+ 
+  
+  <h3>Choose a field to Edit and click the save button</h3> 
+                <div class="panel-body">
+      <form method="post" action="expenseEdit.php" name="registration" class="form-horizontal">
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Fields  </label>
+<div class="col-sm-8">
+<select name="dep" value="dep" class="form-control" required="required">
+<option>expenseType</option>
+<option selected="selected">expenseAmount</option>
+
+
+</select>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label"> expenseId </label>
+<div class="col-sm-8">
+<input type="number" name="expenseId" id="expenseId"  class="form-control"  required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label"> Correct Value </label>
+<div class="col-sm-8">
+<input type="text" name="correct" id="correct"  class="form-control" required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
+</div>
+</div>
+
+
+<div class="col-sm-6 col-sm-offset-4">
+<input type="reset" value="Cancel" class="btn btn-primary">
+
+<input type="submit" name="save" Value="Save" class="btn btn-primary">
+</div>
+</form><br/>
+<div>
+<?php
+if(isset($_POST['save'])){
+          require_once'database.php';
+              
+            if($_POST['dep']=="expenseType"){             
+       
+                $field="expenseType";                 
+            }
+      
+             else if($_POST['dep']=="expenseAmount"){
+                $field="expenseAmount";
+            }
+             
+                 
+              $value=$_POST['correct']; 
+              $expenseId=$_POST['expenseId'];      
+               
+                
+           $d=mysqli_query($con,"update expense set $field='$value' where expenseId=$expenseId");
+       
+              if($d){
+               echo"<br/><p style='color:blue;font-size:20pt'> <i class='fa fa-check'></i> The Error has been corrected. The new ".$field." is ".$value."</p>";
+              
+       }
+       else {       
+       echo"<br/><p style='color:blue;font-size:20pt'> <i class='fa fa-close'></i> Failed to edit the mistake.</p>";
+       } 
+       mysqli_close($con);       
+       }   
+       
+?>
+   </div>
     
 
     </section>
     <!-- /.content -->
+  
   </div>
+ 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
         

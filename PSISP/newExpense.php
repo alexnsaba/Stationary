@@ -135,7 +135,7 @@ session_start();
 		  
         </li>
 		
-		  <li class="active treeview">
+		 <li class="active treeview">
           <a href="#">
             <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
             <span class="pull-right-container">
@@ -144,13 +144,13 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newProducts.php"><i class="fa fa-circle-o"></i> Stoke-In</a></li>           
-			<li><a href="#"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
-			<li><a href="#"><i class="fa fa-edit"></i>Edit Products</a></li>		
-		   </ul>
-		  
+      <li><a href="availableProducts.php"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
+      <li><a href="productEdit.php"><i class="fa fa-edit"></i>Edit Products</a></li>    
+       </ul>
+      
         </li>
-		
-		 <li class="active treeview">
+    
+     <li class="active treeview">
           <a href="#">
             <i class="fa fa-cc-mastercard"></i> <span>SALES</span>
             <span class="pull-right-container">
@@ -159,14 +159,14 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newTransaction.php"><i class="fa fa-plus"></i>New Transaction</a></li>
-			<li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
+      <li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
             <li><a href="transactionEdit.php"><i class="fa fa-edit"></i> Edit Transaction</a></li>
-			<li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>			
+      <li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>     
           </ul>
-		  
+      
         </li>
 		
-		<li class="active treeview">
+		 <li class="active treeview">
           <a href="#">
             <i class="fa fa-usd"></i> <span>EXPENSES</span>
             <span class="pull-right-container">
@@ -175,11 +175,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
-      <li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
+			<li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
             <li><a href="expenseEdit.php"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-      <li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>     
+			<li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
           </ul>
-      
+		  
         </li>
 		 <li class="active treeview">
           <a href="#">
@@ -220,72 +220,70 @@ session_start();
     <!-- Main content -->
     <section class="content">
 	<!--Put your page content here-->
-		<center><h1>RECENT TRANSACTIONS</h1></center>
-   <center>
-   <?php
-   require_once 'database.php';
-   $sel = mysqli_query($con,"select * from transaction");
-   $num= mysqli_num_rows($sel);
-   if($num >0){
-	echo"<div class='box'>";
-	echo"<div class='box-body'>";
-	echo"<table  id='example1' class='table table-bordered table-striped'>";
-	echo"<thead>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</thead>";
-	echo"<tbody>";
-	while($row= mysqli_fetch_array($sel)){
-		echo"<tr>";
-	echo"<td>".$row['TransactionId']."</td>";	
-	echo"<td>".$row['productName']."</td>";
-	echo"<td>".$row['Amount']."</td>";
-	echo"<td>".$row['quantity']."</td>";
-	echo"<td>".$row['date']."</td>";
-	echo"<td>".$row['type']."</td>";
-	echo"<td>".$row['customerName']."</td>";
-	echo"<td>".$row['customer_phone']."</td>";
-	echo"<td>".$row['SalesMan_name']."</td>";
-	echo"</tr>";		
-	}
-	echo"</tbody>";
-	echo"<tfoot>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</tfoot>";
-	
-	echo"</table>";
-	echo"</div>";
-	echo"</div>";
-   }else{
-	   echo"<center><h2>No transaction records are available</h2></center>";
-   }
-	mysqli_close($con);
-	?>
+    <h2>Enter Details of the new Expense</h2>  
+                <div class="panel-body"> 
+
+  <form method="post" action="newExpense.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
+                      
+                    
+
+<div class="form-group">
+<label class="col-sm-2 control-label"> Expense Type  </label>
+<div class="col-sm-8">
+<input type="text" name="expType" id="expType"  class="form-control" placeholder="Eg Lunch, security, transport etc" required="required" >
+</div>
+</div>
+
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Expense Amount  </label>
+<div class="col-sm-8">
+<input type="number" name="exAmount" id="exAmount"  class="form-control" required="required" placeholder="Amount spended" >
+</div>
+</div>
+
+
+
+
+<div class="col-sm-6 col-sm-offset-4">
+<input type="reset" value="Cancel" class="btn btn-primary">
+<input type="submit" name="Save" Value="Save" class="btn btn-primary">
+</div>
+</form>
+
+		
   <center>
     
 
     </section>
     <!-- /.content -->
+     <?php
+// obtaining form parameters
+  if(isset($_POST['Save'])){
+  $expType = $_POST['expType'];
+  $exAmount = $_POST['exAmount'];
+ 
+  date_default_timezone_set('Africa/Kampala');
+  $date = date('d/m/y H:i:s'); 
+  $email = $_SESSION['email'];  
+  require_once'database.php';
+  $sel=mysqli_query($con,"select * from admin where email='$email'");
+  $rw= mysqli_fetch_array($sel);
+  $name=$rw['name'];
+   
+   $a= mysqli_query($con,"insert into expense(expenseType,expenseAmount,date,ResponsilePerson) 
+    values('$expType','$exAmount','$date','$name')");
+   if($a){
+     echo'<h2 style="color:blue"> <i class="fa fa-check"></i>  Data is successfully Saved</h2>';
+   }
+   else{
+       echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, the data could not be saved. Please try agin</h2>';
+   }
+
+ }
+  ?>
   </div>
+ 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
         

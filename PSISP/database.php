@@ -16,5 +16,7 @@ type varchar(10) not null,customerName varchar(20) not null,customer_phone varch
 mysqli_query($con,"create table IF NOT EXISTS product(ProductId int(20) primary key not null auto_increment,
 productName varchar(100) not null ,PPrice int(40) not null ,SPrice int(40) not null,Quantity int(40) not null,date timestamp  not null DEFAULT CURRENT_TIMESTAMP,ResponsilePerson varchar(100) not null)");
 
-
+//creatig expense table
+mysqli_query($con,"create table IF NOT EXISTS expense(expenseId int(20) primary key not null auto_increment,
+expenseType varchar(100) not null ,expenseAmount int(40) not null,date timestamp  not null DEFAULT CURRENT_TIMESTAMP,ResponsilePerson varchar(100) not null)");
 ?>

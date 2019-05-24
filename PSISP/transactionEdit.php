@@ -166,7 +166,7 @@ session_start();
 		  
         </li>
 		
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-usd"></i> <span>EXPENSES</span>
             <span class="pull-right-container">
@@ -174,12 +174,12 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-plus"></i>New Expense</a></li>
-			<li><a href="#"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
-            <li><a href="#"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-			<li><a href="#"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
+            <li class="active"><a href="newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
+      <li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
+            <li><a href="expenseEdit.php"><i class="fa fa-edit"></i> Edit Expenses</a></li>
+      <li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>     
           </ul>
-		  
+      
         </li>
 		 <li class="active treeview">
           <a href="#">

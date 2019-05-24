@@ -135,7 +135,7 @@ session_start();
 		  
         </li>
 		
-		  <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
             <span class="pull-right-container">
@@ -144,13 +144,13 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newProducts.php"><i class="fa fa-circle-o"></i> Stoke-In</a></li>           
-			<li><a href="#"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
-			<li><a href="#"><i class="fa fa-edit"></i>Edit Products</a></li>		
-		   </ul>
-		  
+      <li><a href="availableProducts.php"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
+      <li><a href="productEdit.php"><i class="fa fa-edit"></i>Edit Products</a></li>    
+       </ul>
+      
         </li>
-		
-		 <li class="active treeview">
+    
+     <li class="active treeview">
           <a href="#">
             <i class="fa fa-cc-mastercard"></i> <span>SALES</span>
             <span class="pull-right-container">
@@ -159,14 +159,14 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newTransaction.php"><i class="fa fa-plus"></i>New Transaction</a></li>
-			<li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
+      <li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
             <li><a href="transactionEdit.php"><i class="fa fa-edit"></i> Edit Transaction</a></li>
-			<li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>			
+      <li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>     
           </ul>
-		  
+      
         </li>
 		
-		<li class="active treeview">
+		 <li class="active treeview">
           <a href="#">
             <i class="fa fa-usd"></i> <span>EXPENSES</span>
             <span class="pull-right-container">
@@ -175,11 +175,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
-      <li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
+			<li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
             <li><a href="expenseEdit.php"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-      <li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>     
+			<li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
           </ul>
-      
+		  
         </li>
 		 <li class="active treeview">
           <a href="#">
@@ -220,72 +220,63 @@ session_start();
     <!-- Main content -->
     <section class="content">
 	<!--Put your page content here-->
-		<center><h1>RECENT TRANSACTIONS</h1></center>
+  <center><h1>Available Products</h1></center>
    <center>
    <?php
    require_once 'database.php';
-   $sel = mysqli_query($con,"select * from transaction");
+   $sel = mysqli_query($con,"select * from expense");
    $num= mysqli_num_rows($sel);
    if($num >0){
-	echo"<div class='box'>";
-	echo"<div class='box-body'>";
-	echo"<table  id='example1' class='table table-bordered table-striped'>";
-	echo"<thead>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</thead>";
-	echo"<tbody>";
-	while($row= mysqli_fetch_array($sel)){
-		echo"<tr>";
-	echo"<td>".$row['TransactionId']."</td>";	
-	echo"<td>".$row['productName']."</td>";
-	echo"<td>".$row['Amount']."</td>";
-	echo"<td>".$row['quantity']."</td>";
-	echo"<td>".$row['date']."</td>";
-	echo"<td>".$row['type']."</td>";
-	echo"<td>".$row['customerName']."</td>";
-	echo"<td>".$row['customer_phone']."</td>";
-	echo"<td>".$row['SalesMan_name']."</td>";
-	echo"</tr>";		
-	}
-	echo"</tbody>";
-	echo"<tfoot>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</tfoot>";
-	
-	echo"</table>";
-	echo"</div>";
-	echo"</div>";
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+  echo"<th> <center>Expense Id</center></th>"; 
+  echo"<th> <center>Expense Type</center> </th>";
+  echo"<th><center>Amount Spended</center></th>";
+  echo"<th><center>Date</center>  </th>";
+ echo"<th><center>Person Responsible</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+  echo"<td><center>".$row['expenseId']."</center></td>"; 
+  echo"<td><center>".$row['expenseType']."</center></td>";
+  echo"<td><center><B>UGX.</B> ".number_format($row['expenseAmount'])."</center></td>";
+  echo"<td><center>".$row['date']."</center></td>";
+  echo"<td><center>".$row['ResponsilePerson']."</center></td>";
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  echo"<tfoot>";
+  echo"<tr>";
+  echo"<th> <center>Expense Id</center></th>"; 
+  echo"<th> <center>Expense Type</center> </th>";
+  echo"<th><center>Amount Spended</center></th>";
+  echo"<th><center>Date</center>  </th>";
+ echo"<th><center>Person Responsible</center>  </th>";
+  
+  echo"</tr>";
+  echo"</tfoot>";
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
    }else{
-	   echo"<center><h2>No transaction records are available</h2></center>";
+     echo"<center><h2>No Product is available . You need add more products</h2></center>";
    }
-	mysqli_close($con);
-	?>
+  mysqli_close($con);
+  ?>
   <center>
     
 
     </section>
     <!-- /.content -->
+  
   </div>
+ 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
         
