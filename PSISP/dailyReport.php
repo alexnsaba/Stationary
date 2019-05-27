@@ -62,7 +62,7 @@ session_start();
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+<header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -141,7 +141,7 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-           <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
+            <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
             <li><a href="userEdit.php"><i class="fa fa-edit"></i> Edit Account</a></li>
       <li><a href="userDel.php"><i class="fa fa-trash-o"></i> Delete Account</a></li>
       <li><a href="users.php"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
@@ -149,7 +149,7 @@ session_start();
 		  
         </li>
 		
-		 <li class="active treeview">
+	<li class="active treeview">
           <a href="#">
             <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
             <span class="pull-right-container">
@@ -180,7 +180,7 @@ session_start();
       
         </li>
 		
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-usd"></i> <span>EXPENSES</span>
             <span class="pull-right-container">
@@ -189,11 +189,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
-			<li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
+      <li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
             <li><a href="expenseEdit.php"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-			<li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
+      <li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>     
           </ul>
-		  
+      
         </li>
 		 <li class="active treeview">
           <a href="#">
@@ -218,11 +218,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="dailyReport.php"><i class="fa fa-pie-chart"></i>Daily Report</a></li>
-      <li><a href="monthlyReport.php"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
+			<li><a href="monthlyReport.php"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
             <li><a href="annualReport.php"><i class="fa fa-area-chart"></i> Annual Report</a></li>
-          
+					
           </ul>
-      
+		  
         </li>
 		
 		</ul>
@@ -231,76 +231,298 @@ session_start();
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+ <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+    <section class="content">
+        <?php
+    //getting today's date
+   date_default_timezone_set('Africa/Kampala');
+            $dat = date('d/m/y');
+    echo"<h1>Today's Report on ".$dat."</h1>";
+    ?> 
+                <div class="panel-body">
+  
+
+    <div>
+
     
 
-    <!-- Main content -->
-    <section class="content">
-	<!--Put your page content here-->
-    <h2>Enter Details of the new Expense</h2>  
-                <div class="panel-body"> 
+    <?php
+    
+      
+    
+   echo'<section class="content">';
 
-  <form method="post" action="newExpense.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
-                      
-                    
+  //Put your page content here-->
+   echo' <div class="col-md-8" style="width: 900px">
+          <!--MAP & BOX PANE -->
+          <div class="box box-success">
+           <div class="box-header with-border">
+              <h1 class="box-title">Transactions</h1>
 
-<div class="form-group">
-<label class="col-sm-2 control-label"> Expense Type  </label>
-<div class="col-sm-8">
-<input type="text" name="expType" id="expType"  class="form-control" placeholder="Eg Lunch, security, transport etc" required="required" >
-</div>
-</div>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
 
+<div class="box-body no-padding">';
+              
+   require_once 'database.php';
+date_default_timezone_set('Africa/Kampala');
+            $date = date('y/m/d');
+               //getting total cash
+    $a= mysqli_query($con,"select sum(Amount) as totalCash from transaction where type='Cash' and date='$date'");
+    $rowa= mysqli_fetch_array($a);
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Expense Amount  </label>
-<div class="col-sm-8">
-<input type="number" name="exAmount" id="exAmount"  class="form-control" required="required" placeholder="Amount spended" >
-</div>
-</div>
+    //getting total credit
+    $b= mysqli_query($con,"select sum(Amount) as totalCredit from transaction where type='Credit' and date='$date'");
+    $rowb= mysqli_fetch_array($b);
+   $sel = mysqli_query($con,"select * from transaction where date='$date'");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+  echo"<th> <center>TransactionId</center></th>"; 
+  echo"<th> <center>Name Of Product</center> </th>";
+  echo"<th><center>Transaction Amount</center></th>";
+  echo"<th><center>quantity</center>  </th>";
+  echo"<th><center>date</center></th>";
+  echo"<th> <center>type</center> </th>";
+  echo"<th> <center>customerName</center> </th>";
+  echo"<th> <center>Telephone</center>  </th>";
+  echo"<th> <center>Served By</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+  echo"<td>".$row['TransactionId']."</td>"; 
+  echo"<td>".$row['productName']."</td>";
+  echo"<td>".$row['Amount']."</td>";
+  echo"<td>".$row['quantity']."</td>";
+  echo"<td>".$row['date']."</td>";
+  echo"<td>".$row['type']."</td>";
+  echo"<td>".$row['customerName']."</td>";
+  echo"<td>".$row['customer_phone']."</td>";
+  echo"<td>".$row['SalesMan_name']."</td>";
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  echo"<tfoot>";
+  echo"<tr>";
+ echo"<th>Total Cash</th>";
+ echo"<th colspan='8'>UGX. ".number_format($rowa['totalCash'])."</th>";
+  echo"</tr>";
+   echo"<tr>";
+ echo"<th>Total Credit</th>";
+ echo"<th colspan='8'>UGX. ".number_format($rowb['totalCredit'])."</th>";
+  echo"</tr>";
+  echo"</tfoot>";
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
+   }else{
+     echo"<center><h2>No transaction records Found</h2></center>";
+   }
 
+  echo'
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
 
+          </div>
+          <!-- /.box -->
+       
+          
+          
 
-
-<div class="col-sm-6 col-sm-offset-4">
-<input type="reset" value="Cancel" class="btn btn-primary">
-<input type="submit" name="Save" Value="Save" class="btn btn-primary">
-</div>
-</form>
-
-		
-  <center>
     
 
     </section>
     <!-- /.content -->
-     <?php
-// obtaining form parameters
-  if(isset($_POST['Save'])){
-  $expType = $_POST['expType'];
-  $exAmount = $_POST['exAmount'];
- 
-  date_default_timezone_set('Africa/Kampala');
-  $date = date('y/m/d'); 
-  $email = $_SESSION['email'];  
-  require_once'database.php';
-  $sel=mysqli_query($con,"select * from user where email='$email'");
-  $rw= mysqli_fetch_array($sel);
-  $name=$rw['name'];
-   
-   $a= mysqli_query($con,"insert into expense(expenseType,expenseAmount,date,ResponsilePerson) 
-    values('$expType','$exAmount','$date','$name')");
-   if($a){
-     echo'<h2 style="color:blue"> <i class="fa fa-check"></i>  Data is successfully Saved</h2>';
-   }
-   else{
-       echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, the data could not be saved. Please try agin</h2>';
+     <!-- Main content -->';
+
+//displaying monthly expenses
+
+      echo'<section class="content">';
+
+  //Put your page content here-->
+   echo' <div class="col-md-8" style="width: 900px">
+          <!--MAP & BOX PANE -->
+          <div class="box box-success">
+           <div class="box-header with-border">
+              <h1 class="box-title">Expenses</h1>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+<div class="box-body no-padding">';
+              
+   require_once 'database.php';
+    //$a= mysqli_query($con,"select sum(depositAmount) as tdeposit from deposit where MONTH(date)='$mon' and YEAR(date)='$yr'");
+   //getting total cash
+    $a= mysqli_query($con,"select sum(expenseAmount) as totalexpense from expense where date='$date'");
+    $rowc= mysqli_fetch_array($a);   
+    
+   $sel = mysqli_query($con,"select * from expense where  date='$date'");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+  echo"<th> <center>Expense Id</center></th>"; 
+  echo"<th> <center>Expense Type</center> </th>";
+  echo"<th><center>Amount Spent</center></th>";
+  echo"<th><center>Date</center>  </th>";
+ echo"<th><center>Person Responsible</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+   echo"<td><center>".$row['expenseId']."</center></td>"; 
+  echo"<td><center>".$row['expenseType']."</center></td>";
+  echo"<td><center><B>UGX.</B> ".number_format($row['expenseAmount'])."</center></td>";
+  echo"<td><center>".$row['date']."</center></td>";
+  echo"<td><center>".$row['ResponsilePerson']."</center></td>";
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  echo"<tfoot>";
+  echo"<tr>";
+ echo"<th colspan='2'> <center>Total Expenses</center></th>"; 
+  echo"<th colspan='4'> UGX. ".number_format($rowc['totalexpense'])." </th>";
+  echo"</tr>";
+  
+  echo"</tfoot>";
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
+   }else{
+     echo"<center><h2>No expense records Found</h2></center>";
    }
 
- }
-  ?>
+  echo'
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+
+          </div>
+          <!-- /.box -->
+       
+          
+          
+
+    
+
+    </section>
+    <!-- /.content -->
+     <!-- Main content -->';
+
+
+
+     //displaying the report about products
+           echo'<section class="content">';
+
+  //Put your page content here-->
+   echo' <div class="col-md-8" style="width: 900px">
+          <!--MAP & BOX PANE -->
+          <div class="box box-success">
+           <div class="box-header with-border">
+              <h1 class="box-title">Products</h1>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+<div class="box-body no-padding">';
+              
+   require_once 'database.php';   
+    
+    
+   $sel = mysqli_query($con,"select * from product where  date='$date'");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+ echo"<th> <center>ProductId</center></th>"; 
+  echo"<th> <center>productName</center> </th>";
+  echo"<th><center>Buying Price</center></th>";
+  echo"<th><center>Selling Price</center></th>";
+  echo"<th><center>Quantity</center>  </th>";
+  echo"<th><center>Date</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+  echo"<td><center>".$row['ProductId']."</center></td>"; 
+  echo"<td><center>".$row['productName']."</center></td>";
+  echo"<td><center>".number_format($row['PPrice'])." /=</center></td>";
+  echo"<td><center>".number_format($row['SPrice'])." /=</center></td>";
+  echo"<td><center>".$row['Quantity']."</center></td>";
+  echo"<td><center>".$row['date']."</center></td>";
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
+   }else{
+     echo"<center><h2>No product records Found</h2></center>";
+   }
+
+  echo'
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+
+          </div>
+          <!-- /.box -->
+       
+          
+          
+
+    
+
+    </section>
+    <!-- /.content -->
+     <!-- Main content -->';
+
+
+
+   
+    
+    ?>
   </div>
+    </section>
+  
+  </div>
+
+    
+  
+
  
   <!-- /.content-wrapper -->
   <footer class="main-footer">

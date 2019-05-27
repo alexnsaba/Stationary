@@ -36,6 +36,9 @@ session_start();
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!--styles for telephone-->
+ <link rel="stylesheet" href="build/css/intlTelInput.css">
+ <link rel="stylesheet" href="build/css/demo.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->  
@@ -48,21 +51,21 @@ session_start();
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <style>
   @media screen and (min-width:720px){
-	td.h1{
-	margin-left: 30%;	
-	}
+  td.h1{
+  margin-left: 30%; 
+  }
 }
  @media screen and (min-width:720px){
-	.box{
-	
-	}
+  .box{
+  
+  }
 }
   </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+<header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -89,7 +92,7 @@ session_start();
                 <?php
         require_once'database.php';
         $email=$_SESSION['email'];
-        $a= mysqli_query($con,"select * from user where email='$email' and type='Manager'");
+        $a= mysqli_query($con,"select * from user where email='$email' and type='Cashier'");
         $rw = mysqli_fetch_array($a);
         echo $rw['name'];
         echo'<img class="user-image" src="data:image;base64,'.$rw['photo'].'" >';
@@ -106,7 +109,7 @@ session_start();
         
         ?>
                 <p>
-                  Manager
+                  Cashier
                   
                 </p>
               </li>                          
@@ -132,37 +135,8 @@ session_start();
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MANAGER'S DASH BOARD</li>
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-users"></i> <span>MANAGE USERS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-           <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
-            <li><a href="userEdit.php"><i class="fa fa-edit"></i> Edit Account</a></li>
-      <li><a href="userDel.php"><i class="fa fa-trash-o"></i> Delete Account</a></li>
-      <li><a href="users.php"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
-          </ul>
-		  
-        </li>
-		
-		 <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="newProducts.php"><i class="fa fa-circle-o"></i> Stoke-In</a></li>           
-      <li><a href="availableProducts.php"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
-      <li><a href="productEdit.php"><i class="fa fa-edit"></i>Edit Products</a></li>    
-       </ul>
-      
-        </li>
+        <li class="header">CASHIER'S DASH BOARD</li>      
+    
     
      <li class="active treeview">
           <a href="#">
@@ -172,15 +146,14 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="newTransaction.php"><i class="fa fa-plus"></i>New Transaction</a></li>
-      <li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
-            <li><a href="transactionEdit.php"><i class="fa fa-edit"></i> Edit Transaction</a></li>
-      <li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>     
+            <li class="active"><a href="cashier.php"><i class="fa fa-plus"></i>New Transaction</a></li>
+      <li><a href="cashier_transactions.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
+              
           </ul>
       
         </li>
-		
-		 <li class="active treeview">
+    
+     <li class="active treeview">
           <a href="#">
             <i class="fa fa-usd"></i> <span>EXPENSES</span>
             <span class="pull-right-container">
@@ -188,44 +161,15 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
-			<li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
-            <li><a href="expenseEdit.php"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-			<li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
-          </ul>
-		  
-        </li>
-		 <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-balance-scale"></i> <span>ACCOUNTING</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>  
-            <ul class="treeview-menu">
-            <li class="active"><a href="accounts.php"><i class="fa fa-balance-scale"></i>Balance Cashier</a></li>
-         
-          </ul>     
-    </li>
-		
-		
-		 <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-line-chart"></i> <span>REPORTS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="dailyReport.php"><i class="fa fa-pie-chart"></i>Daily Report</a></li>
-      <li><a href="monthlyReport.php"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
-            <li><a href="annualReport.php"><i class="fa fa-area-chart"></i> Annual Report</a></li>
-          
-          </ul>
-      
-        </li>
-		
-		</ul>
+            <li class="active"><a href="cashier_newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
+      <li><a href="cashier_expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
+                
+          </ul>   
+        </li>  
+    
+     
+    
+    </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -236,78 +180,73 @@ session_start();
     
 
     <!-- Main content -->
-    <section class="content">
-	<!--Put your page content here-->
-    <h2>Enter Details of the new Expense</h2>  
-                <div class="panel-body"> 
-
-  <form method="post" action="newExpense.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
-                      
-                    
-
-<div class="form-group">
-<label class="col-sm-2 control-label"> Expense Type  </label>
-<div class="col-sm-8">
-<input type="text" name="expType" id="expType"  class="form-control" placeholder="Eg Lunch, security, transport etc" required="required" >
-</div>
-</div>
-
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Expense Amount  </label>
-<div class="col-sm-8">
-<input type="number" name="exAmount" id="exAmount"  class="form-control" required="required" placeholder="Amount spended" >
-</div>
-</div>
-
-
-
-
-<div class="col-sm-6 col-sm-offset-4">
-<input type="reset" value="Cancel" class="btn btn-primary">
-<input type="submit" name="Save" Value="Save" class="btn btn-primary">
-</div>
-</form>
-
-		
+     <section class="content">
+  <!--Put your page content here-->
+  <center><h1>Available Products</h1></center>
+   <center>
+   <?php
+   require_once 'database.php';
+   $sel = mysqli_query($con,"select * from expense");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+  echo"<th> <center>Expense Id</center></th>"; 
+  echo"<th> <center>Expense Type</center> </th>";
+  echo"<th><center>Amount Spent</center></th>";
+  echo"<th><center>Date</center>  </th>";
+ echo"<th><center>Person Responsible</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+  echo"<td><center>".$row['expenseId']."</center></td>"; 
+  echo"<td><center>".$row['expenseType']."</center></td>";
+  echo"<td><center><B>UGX.</B> ".number_format($row['expenseAmount'])."</center></td>";
+  echo"<td><center>".$row['date']."</center></td>";
+  echo"<td><center>".$row['ResponsilePerson']."</center></td>";
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  echo"<tfoot>";
+  echo"<tr>";
+  echo"<th> <center>Expense Id</center></th>"; 
+  echo"<th> <center>Expense Type</center> </th>";
+  echo"<th><center>Amount Spent</center></th>";
+  echo"<th><center>Date</center>  </th>";
+ echo"<th><center>Person Responsible</center>  </th>";
+  
+  echo"</tr>";
+  echo"</tfoot>";
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
+   }else{
+     echo"<center><h2>No Product is available . You need add more products</h2></center>";
+   }
+  mysqli_close($con);
+  ?>
   <center>
     
 
     </section>
-    <!-- /.content -->
-     <?php
-// obtaining form parameters
-  if(isset($_POST['Save'])){
-  $expType = $_POST['expType'];
-  $exAmount = $_POST['exAmount'];
+  
  
-  date_default_timezone_set('Africa/Kampala');
-  $date = date('y/m/d'); 
-  $email = $_SESSION['email'];  
-  require_once'database.php';
-  $sel=mysqli_query($con,"select * from user where email='$email'");
-  $rw= mysqli_fetch_array($sel);
-  $name=$rw['name'];
-   
-   $a= mysqli_query($con,"insert into expense(expenseType,expenseAmount,date,ResponsilePerson) 
-    values('$expType','$exAmount','$date','$name')");
-   if($a){
-     echo'<h2 style="color:blue"> <i class="fa fa-check"></i>  Data is successfully Saved</h2>';
-   }
-   else{
-       echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, the data could not be saved. Please try agin</h2>';
-   }
-
- }
-  ?>
   </div>
+  
+  
  
   <!-- /.content-wrapper -->
   <footer class="main-footer">
         
     <!-- Default to the left -->
     <strong><center>Copyright &copy; 2019 Paper Source InterStationers and printers.</strong> All rights reserved.</center>
-	</footer>
+  </footer>
 
 
   <!-- /.control-sidebar -->
@@ -360,6 +299,11 @@ session_start();
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script>
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({

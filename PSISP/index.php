@@ -165,8 +165,11 @@ require_once'function.php';
  if($_POST['empType']=="Manager"){
     adminLogin();
  }
- else{
-	echo"<p>This is not manager</p>"; 
+ else if($_POST['empType']=="Cashier"){
+	 cashierLogin();
+ }
+ else if($_POST['empType']=="Accountant"){
+  accountantLogin();
  }
 }
 

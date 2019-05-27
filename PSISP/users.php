@@ -62,7 +62,7 @@ session_start();
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+ <header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -141,7 +141,7 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-           <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
+            <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
             <li><a href="userEdit.php"><i class="fa fa-edit"></i> Edit Account</a></li>
       <li><a href="userDel.php"><i class="fa fa-trash-o"></i> Delete Account</a></li>
       <li><a href="users.php"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
@@ -149,7 +149,7 @@ session_start();
 		  
         </li>
 		
-		 <li class="active treeview">
+	<li class="active treeview">
           <a href="#">
             <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
             <span class="pull-right-container">
@@ -180,7 +180,7 @@ session_start();
       
         </li>
 		
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-usd"></i> <span>EXPENSES</span>
             <span class="pull-right-container">
@@ -189,11 +189,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
-			<li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
+      <li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
             <li><a href="expenseEdit.php"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-			<li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
+      <li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>     
           </ul>
-		  
+      
         </li>
 		 <li class="active treeview">
           <a href="#">
@@ -218,11 +218,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="dailyReport.php"><i class="fa fa-pie-chart"></i>Daily Report</a></li>
-      <li><a href="monthlyReport.php"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
+			<li><a href="monthlyReport.php"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
             <li><a href="annualReport.php"><i class="fa fa-area-chart"></i> Annual Report</a></li>
-          
+					
           </ul>
-      
+		  
         </li>
 		
 		</ul>
@@ -233,73 +233,250 @@ session_start();
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+    <section class="content">
+       <h3>LogIn Accounts</h3> 
+
     
 
-    <!-- Main content -->
-    <section class="content">
-	<!--Put your page content here-->
-    <h2>Enter Details of the new Expense</h2>  
-                <div class="panel-body"> 
+    <?php   
 
-  <form method="post" action="newExpense.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
-                      
-                    
+    //displaying Manager Accounts
 
-<div class="form-group">
-<label class="col-sm-2 control-label"> Expense Type  </label>
-<div class="col-sm-8">
-<input type="text" name="expType" id="expType"  class="form-control" placeholder="Eg Lunch, security, transport etc" required="required" >
-</div>
-</div>
+      echo'<section class="content">';
 
+  //Put your page content here-->
+   echo' <div class="col-md-8" style="width: 900px">
+          <!--MAP & BOX PANE -->
+          <div class="box box-success">
+           <div class="box-header with-border">
+              <h1 class="box-title">Managers</h1>
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Expense Amount  </label>
-<div class="col-sm-8">
-<input type="number" name="exAmount" id="exAmount"  class="form-control" required="required" placeholder="Amount spended" >
-</div>
-</div>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
 
+<div class="box-body no-padding">';
+              
+   require_once 'database.php';      
+    
+   $sel = mysqli_query($con,"select * from user where  type='Manager'");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+  echo"<th> <center>userId</center></th>"; 
+  echo"<th> <center>name</center> </th>";
+  echo"<th><center>email</center></th>";
+  echo"<th><center>phone</center>  </th>";
+ echo"<th><center>type</center>  </th>";
+ echo"<th><center>photo</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+   echo"<td><center>".$row['userId']."</center></td>"; 
+  echo"<td><center>".$row['name']."</center></td>";
+  echo"<td><center>".$row['email']."</center></td>";
+  echo"<td><center>".$row['phone']."</center></td>";
+  echo"<td><center>".$row['type']."</center></td>";
+  echo'<td><img height="80" width="80" src="data:image;base64,'.$row['photo'].'" ></td>';
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
+   }else{
+     echo"<center><h2>No Manager records Found</h2></center>";
+   }
 
+  echo'
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
 
+          </div>
+          <!-- /.box -->
+       
+          
+          
 
-<div class="col-sm-6 col-sm-offset-4">
-<input type="reset" value="Cancel" class="btn btn-primary">
-<input type="submit" name="Save" Value="Save" class="btn btn-primary">
-</div>
-</form>
-
-		
-  <center>
     
 
     </section>
     <!-- /.content -->
-     <?php
-// obtaining form parameters
-  if(isset($_POST['Save'])){
-  $expType = $_POST['expType'];
-  $exAmount = $_POST['exAmount'];
+     <!-- Main content -->';
  
-  date_default_timezone_set('Africa/Kampala');
-  $date = date('y/m/d'); 
-  $email = $_SESSION['email'];  
-  require_once'database.php';
-  $sel=mysqli_query($con,"select * from user where email='$email'");
-  $rw= mysqli_fetch_array($sel);
-  $name=$rw['name'];
-   
-   $a= mysqli_query($con,"insert into expense(expenseType,expenseAmount,date,ResponsilePerson) 
-    values('$expType','$exAmount','$date','$name')");
-   if($a){
-     echo'<h2 style="color:blue"> <i class="fa fa-check"></i>  Data is successfully Saved</h2>';
-   }
-   else{
-       echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, the data could not be saved. Please try agin</h2>';
+     
+    
+   //displaying Cashier Accounts
+
+      echo'<section class="content">';
+
+  //Put your page content here-->
+   echo' <div class="col-md-8" style="width: 900px">
+          <!--MAP & BOX PANE -->
+          <div class="box box-success">
+           <div class="box-header with-border">
+              <h1 class="box-title">Cashiers</h1>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+<div class="box-body no-padding">';
+              
+   require_once 'database.php';      
+    
+   $sel = mysqli_query($con,"select * from user where  type='Cashier'");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+  echo"<th> <center>userId</center></th>"; 
+  echo"<th> <center>name</center> </th>";
+  echo"<th><center>email</center></th>";
+  echo"<th><center>phone</center>  </th>";
+ echo"<th><center>type</center>  </th>";
+ echo"<th><center>photo</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+   echo"<td><center>".$row['userId']."</center></td>"; 
+  echo"<td><center>".$row['name']."</center></td>";
+  echo"<td><center>".$row['email']."</center></td>";
+  echo"<td><center>".$row['phone']."</center></td>";
+  echo"<td><center>".$row['type']."</center></td>";
+  echo'<td><img height="80" width="80" src="data:image;base64,'.$row['photo'].'" ></td>';
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
+   }else{
+     echo"<center><h2>No Cashier records Found</h2></center>";
    }
 
- }
-  ?>
+  echo'
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+
+          </div>
+          <!-- /.box -->
+       
+          
+          
+
+    
+
+    </section>
+    <!-- /.content -->
+     <!-- Main content -->';
+
+
+//displaying Accountant Accounts
+
+      echo'<section class="content">';
+
+  //Put your page content here-->
+   echo' <div class="col-md-8" style="width: 900px">
+          <!--MAP & BOX PANE -->
+          <div class="box box-success">
+           <div class="box-header with-border">
+              <h1 class="box-title">Accountants</h1>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+<div class="box-body no-padding">';
+              
+   require_once 'database.php';      
+    
+   $sel = mysqli_query($con,"select * from user where  type='Accountant'");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+  echo"<div class='box'>";
+  echo"<div class='box-body'>";
+  echo"<table  id='example1' class='table table-bordered table-striped'>";
+  echo"<thead>";
+  echo"<tr>";
+  echo"<th> <center>userId</center></th>"; 
+  echo"<th> <center>name</center> </th>";
+  echo"<th><center>email</center></th>";
+  echo"<th><center>phone</center>  </th>";
+ echo"<th><center>type</center>  </th>";
+ echo"<th><center>photo</center>  </th>";
+  echo"</tr>";
+  echo"</thead>";
+  echo"<tbody>";
+  while($row= mysqli_fetch_array($sel)){
+    echo"<tr>";
+   echo"<td><center>".$row['userId']."</center></td>"; 
+  echo"<td><center>".$row['name']."</center></td>";
+  echo"<td><center>".$row['email']."</center></td>";
+  echo"<td><center>".$row['phone']."</center></td>";
+  echo"<td><center>".$row['type']."</center></td>";
+  echo'<td><img height="80" width="80" src="data:image;base64,'.$row['photo'].'" ></td>';
+  echo"</tr>";    
+  }
+  echo"</tbody>";
+  
+  echo"</table>";
+  echo"</div>";
+  echo"</div>";
+   }else{
+     echo"<center><h2>No Accountant records Found</h2></center>";
+   }
+
+  echo'
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+
+          </div>
+          <!-- /.box -->
+       
+          
+          
+
+    
+
+    </section>
+    <!-- /.content -->
+     <!-- Main content -->';
+
+
+
+
+   
+    
+    ?>
+  </div>
+    </section>
+  
   </div>
  
   <!-- /.content-wrapper -->

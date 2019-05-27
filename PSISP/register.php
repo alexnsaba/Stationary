@@ -62,7 +62,7 @@ session_start();
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+<header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -141,7 +141,7 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-           <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
+            <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
             <li><a href="userEdit.php"><i class="fa fa-edit"></i> Edit Account</a></li>
       <li><a href="userDel.php"><i class="fa fa-trash-o"></i> Delete Account</a></li>
       <li><a href="users.php"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
@@ -195,7 +195,7 @@ session_start();
           </ul>
 		  
         </li>
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-balance-scale"></i> <span>ACCOUNTING</span>
             <span class="pull-right-container">
@@ -209,7 +209,7 @@ session_start();
     </li>
 		
 		
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-line-chart"></i> <span>REPORTS</span>
             <span class="pull-right-container">
@@ -238,67 +238,107 @@ session_start();
     <!-- Main content -->
     <section class="content">
 	<!--Put your page content here-->
-    <h2>Enter Details of the new Expense</h2>  
+    <h2>Enter the details of the user </h2>  
                 <div class="panel-body"> 
 
-  <form method="post" action="newExpense.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
+  <form method="post" action="register.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
                       
                     
 
 <div class="form-group">
-<label class="col-sm-2 control-label"> Expense Type  </label>
+<label class="col-sm-2 control-label">  Name  </label>
 <div class="col-sm-8">
-<input type="text" name="expType" id="expType"  class="form-control" placeholder="Eg Lunch, security, transport etc" required="required" >
+<input type="text" name="name" id="name"  class="form-control" placeholder="Full Names" required="required" >
 </div>
 </div>
 
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Expense Amount  </label>
+<label class="col-sm-2 control-label">Email  </label>
 <div class="col-sm-8">
-<input type="number" name="exAmount" id="exAmount"  class="form-control" required="required" placeholder="Amount spended" >
+<input type="email" name="email" id="email"  class="form-control" required="required" placeholder="Eg uzaba@gmail.com" >
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Password  </label>
+<div class="col-sm-8">
+<input type="password" name="pass1" id="pass1"  class="form-control" required="required" >
 </div>
 </div>
 
+<div class="form-group">
+<label class="col-sm-2 control-label"> Comfirm Password  </label>
+<div class="col-sm-8">
+<input type="password" name="pass2" id="pass2"  class="form-control" required="required" placeholder="Retype the password">
+</div>
+</div>
 
+<div class="form-group">
+<label class="col-sm-2 control-label">Telephone  </label>
+<div class="col-sm-8">
+<input type="tel" name="phone" id="phone"  class="form-control" required="required" placeholder="Eg +256787946565">
+</div>
+</div>
 
+<div class="form-group">
+<label class="col-sm-2 control-label">Choose user category</label>
+<div class="col-sm-8">
+<select name="category" value="category"  class="form-control" required="required">
+  <option>Accountant</option>
+<option>Cashier</option>
+<option selected="selected">Manager</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Upload Image of the User  </label>
+<div class="col-sm-8">
+<input type="file" name="image" accept="image/*"  class="form-control" required="required">
+</div>
+</div>
 
 <div class="col-sm-6 col-sm-offset-4">
 <input type="reset" value="Cancel" class="btn btn-primary">
-<input type="submit" name="Save" Value="Save" class="btn btn-primary">
+<input type="submit" name="create" Value="Create" class="btn btn-primary">
 </div>
-</form>
-
-		
-  <center>
-    
+</form>		
+  <center>  
 
     </section>
     <!-- /.content -->
      <?php
 // obtaining form parameters
-  if(isset($_POST['Save'])){
-  $expType = $_POST['expType'];
-  $exAmount = $_POST['exAmount'];
- 
-  date_default_timezone_set('Africa/Kampala');
-  $date = date('y/m/d'); 
-  $email = $_SESSION['email'];  
-  require_once'database.php';
-  $sel=mysqli_query($con,"select * from user where email='$email'");
-  $rw= mysqli_fetch_array($sel);
-  $name=$rw['name'];
-   
-   $a= mysqli_query($con,"insert into expense(expenseType,expenseAmount,date,ResponsilePerson) 
-    values('$expType','$exAmount','$date','$name')");
-   if($a){
-     echo'<h2 style="color:blue"> <i class="fa fa-check"></i>  Data is successfully Saved</h2>';
+  if(isset($_POST['create'])){
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $pass1 = $_POST['pass1'];
+  $pass2 = $_POST['pass2'];
+  $phone = $_POST['phone'];
+  $category = $_POST['category'];
+  $image = addslashes($_FILES['image']['tmp_name']);
+  $imageName = addslashes($_FILES['image']['name']);
+  $image = file_get_contents($image);
+  $image =base64_encode($image);
+  if($pass1==$pass2){
+    require_once'database.php';
+    $password=sha1($pass1);
+   $ins=  mysqli_query($con,"insert into user(name,email,password,phone,type,photo,photo_name) 
+    values('$name','$email','$password','$phone','$category','$image','$imageName')");
+   if($ins){
+      echo'<h2 style="color:blue"> <i class="fa fa-check"></i>  The Account is successfully created</h2>';
    }
    else{
-       echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, the data could not be saved. Please try agin</h2>';
+     echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, the data could not be saved. Please try agin</h2>';
    }
+  }
+  else{
+        echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, Passwords do not match. try again</h2>';
+
+  } 
+  mysqli_close($con);
 
  }
+
   ?>
   </div>
  

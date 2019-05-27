@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php
+session_start();
+      if(isset($_SESSION['email'])&& !empty($_SESSION['email'])){       
+      }else{
+       header("location:index.php");  
+      }
+      
+ ?> 
 <html>
 <head>
   <meta charset="utf-8">
@@ -29,6 +36,9 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!--styles for telephone-->
+ <link rel="stylesheet" href="build/css/intlTelInput.css">
+ <link rel="stylesheet" href="build/css/demo.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->  
@@ -41,21 +51,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <style>
   @media screen and (min-width:720px){
-	td.h1{
-	margin-left: 30%;	
-	}
+  td.h1{
+  margin-left: 30%; 
+  }
 }
  @media screen and (min-width:720px){
-	.box{
-	
-	}
+  .box{
+  
+  }
 }
   </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+<header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -76,26 +86,40 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Uzabakiriho Viatori</span>
+              
+              <span class="hidden-xs">
+                
+                <?php
+        require_once'database.php';
+        $email=$_SESSION['email'];
+        $a= mysqli_query($con,"select * from user where email='$email' and type='Accountant'");
+        $rw = mysqli_fetch_array($a);
+        echo $rw['name'];
+        echo'<img class="user-image" src="data:image;base64,'.$rw['photo'].'" >';
+        
+        ?>
+              </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+               <?php    
+        
+        echo'<img class="img-circle" src="data:image;base64,'.$rw['photo'].'" >';
+        
+        ?>
                 <p>
-                  Manager
+                  Accountant
                   
                 </p>
               </li>                          
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Log Out</a>
+                 <div class="pull-left">
+                  <a href="logout.php" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Cancel</a>
+                  <a href="#" class="btn btn-primary"><i class="fa fa-window-close" style="font-size:30px"></i> Cancel</a>
                 </div>
               </li>
             </ul>
@@ -111,40 +135,10 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MANAGER'S DASH BOARD</li>
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-users"></i> <span>MANAGE USERS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-user"></i> Create Account</a></li>
-            <li><a href="#"><i class="fa fa-edit"></i> Edit Account</a></li>
-			<li><a href="#"><i class="fa fa-trash-o"></i> Delete Account</a></li>
-			<li><a href="#"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
-          </ul>
-		  
-        </li>
-		
-		  <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Stoke-In</a></li>
-            <li><a href="#"><i class="fa fa-trash-o"></i> Stoke-Out</a></li>
-			<li><a href="#"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
-			<li><a href="#"><i class="fa fa-edit"></i>Edit Products</a></li>		
-		   </ul>
-		  
-        </li>
-		
-		 <li class="active treeview">
+        <li class="header">CASHIER'S DASH BOARD</li>      
+    
+    
+     <li class="active treeview">
           <a href="#">
             <i class="fa fa-cc-mastercard"></i> <span>SALES</span>
             <span class="pull-right-container">
@@ -152,56 +146,29 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-plus"></i>New Transaction</a></li>
-			<li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
-            <li><a href="#"><i class="fa fa-edit"></i> Edit Transaction</a></li>
-			<li><a href="#"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>			
+            <li class="active"><a href="accountant.php"><i class="fa fa-plus"></i>New Transaction</a></li>
+      <li><a href="accountant_transactions.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
+              
           </ul>
-		  
+      
         </li>
-		
-		 <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-usd"></i> <span>EXPENSES</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-plus"></i>New Expense</a></li>
-			<li><a href="#"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
-            <li><a href="#"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-			<li><a href="#"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
-          </ul>
-		  
-        </li>
-		 <li class="active treeview">
+    
+     <li class="active treeview">
           <a href="#">
             <i class="fa fa-balance-scale"></i> <span>ACCOUNTING</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>       
-		</li>
-		
-		
-		 <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-line-chart"></i> <span>REPORTS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-pie-chart"></i>Daily Report</a></li>
-			<li><a href="#"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
-            <li><a href="#"><i class="fa fa-area-chart"></i> Annual Report</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i>Emmergency Report</a></li>			
-          </ul>
-		  
-        </li>
-		
-		</ul>
+          </a>  
+            <ul class="treeview-menu">
+            <li class="active"><a href="accountant_accounts.php"><i class="fa fa-balance-scale"></i>Balance Cashier</a></li>
+         
+          </ul>     
+    </li> 
+    
+     
+    
+    </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -213,79 +180,135 @@
 
     <!-- Main content -->
     <section class="content">
-	<!--Put your page content here-->
-		<center><h1>RECENT TRANSACTIONS</h1></center>
-   <center>
-   <?php
-   require_once 'database.php';
-   $sel = mysqli_query($con,"select * from transaction");
-   $num= mysqli_num_rows($sel);
-   if($num >0){
-	echo"<div class='box'>";
-	echo"<div class='box-body'>";
-	echo"<table  id='example1' class='table table-bordered table-striped'>";
-	echo"<thead>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</thead>";
-	echo"<tbody>";
-	while($row= mysqli_fetch_array($sel)){
-		echo"<tr>";
-	echo"<td>".$row['TransactionId']."</td>";	
-	echo"<td>".$row['productName']."</td>";
-	echo"<td>".$row['Amount']."</td>";
-	echo"<td>".$row['quantity']."</td>";
-	echo"<td>".$row['date']."</td>";
-	echo"<td>".$row['type']."</td>";
-	echo"<td>".$row['customerName']."</td>";
-	echo"<td>".$row['customer_phone']."</td>";
-	echo"<td>".$row['SalesMan_name']."</td>";
-	echo"</tr>";		
-	}
-	echo"</tbody>";
-	echo"<tfoot>";
-	echo"<tr>";
-	echo"<th> <center>TransactionId</center></th>";	
-	echo"<th> <center>Name Of Product</center> </th>";
-	echo"<th><center>Transaction Amount</center></th>";
-	echo"<th><center>quantity</center>	</th>";
-	echo"<th><center>date</center></th>";
-	echo"<th>	<center>type</center>	</th>";
-	echo"<th>	<center>customerName</center>	</th>";
-	echo"<th>	<center>Telephone</center>	</th>";
-	echo"<th>	<center>Served By</center>	</th>";
-	echo"</tr>";
-	echo"</tfoot>";
-	
-	echo"</table>";
-	echo"</div>";
-	echo"</div>";
-   }else{
-	   echo"<center><h2>No transaction records are available</h2></center>";
-   }
-	mysqli_close($con);
-	?>
-  <center>
+  <!--Put your page content here-->
+ 
+  
+  <h3>Enter the sale's details and click the save button</h3> 
+                <div class="panel-body">
+      <form method="post" action="accountant.php" name="registration" class="form-horizontal">
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Name of the Product  </label>
+<div class="col-sm-8">
+<select name="productName" value="productName" class="form-control" required="required">
+<?php
+require_once 'database.php';
+   $sel = mysqli_query($con,"select * from product where Quantity>0");
+   while($row= mysqli_fetch_array($sel)){
+    echo"<option>".$row['productName']."</option>";
+  }   
+?>
+
+
+</select>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Transaction Amount </label>
+<div class="col-sm-8">
+<input type="number" name="transactionAmount" id="transactionAmount"  class="form-control"  required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label"> Quantity </label>
+<div class="col-sm-8">
+<input type="number" name="quantity" id="quantity"  class="form-control" required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Transaction Type  </label>
+<div class="col-sm-8">
+<select name="type" value="type" class="form-control" required="required">
+<option>Cash</option>
+<option>Credit</option>
+</select>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label"> Name Of The Customer </label>
+<div class="col-sm-8">
+<input type="text" name="custName" id="custName"  class="form-control" required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Customer's Telephone Number  </label>
+<div class="col-sm-8">
+  
+<input type="tel" name="custPhone" id="mobile-number"  class="form-control" required="required">
+
+</div>
+</div>
+
+<div class="col-sm-6 col-sm-offset-4">
+<input type="reset" value="Cancel" class="btn btn-primary">
+
+<input type="submit" name="save" Value="Save" class="btn btn-primary">
+</div>
+</form>
+<script type="text/javascript" src="http://www.jqueryshare.net/cdn/jquery.1.12.4min.js"></script>
+
+<script src="build/js/intlTelInput.js"></script> 
+<script>
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
+</script>
+<br/>
+<div>
+<?php
+if(isset($_POST['save'])){
+          require_once'database.php';
+            $productName =$_POST['productName'];  
+            $transactionAmount =$_POST['transactionAmount'];    
+            $quantity =$_POST['quantity'];     
+            $type =$_POST['type'];  
+            $custName =$_POST['custName'];  
+            $custPhone =$_POST['custPhone'];  
+            date_default_timezone_set('Africa/Kampala');
+            $date = date('y/m/d'); 
+            $email = $_SESSION['email'];  
+            
+            $sel=mysqli_query($con,"select * from user where email='$email'");
+            $rw= mysqli_fetch_array($sel);
+            $name=$rw['name'];
+       
+           $d=mysqli_query($con,"insert into transaction(productName,Amount,quantity,date,type,customerName,customer_phone,SalesMan_name) values('$productName','$transactionAmount','$quantity','$date','$type','$custName','$custPhone','$name')");
+       
+              if($d){
+               echo"<br/><p style='color:blue;font-size:20pt'> <i class='fa fa-check'></i> Data saved sucessfully</p>";
+              
+       }
+       else {       
+       echo"<br/><p style='color:blue;font-size:20pt'> <i class='fa fa-close'></i> Failed to save data</p>";
+       } 
+       mysqli_close($con);       
+       }   
+       
+?>
+   </div>
     
 
     </section>
     <!-- /.content -->
+  
   </div>
+ 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
         
     <!-- Default to the left -->
     <strong><center>Copyright &copy; 2019 Paper Source InterStationers and printers.</strong> All rights reserved.</center>
-	</footer>
+  </footer>
 
 
   <!-- /.control-sidebar -->
@@ -338,6 +361,11 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script>
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({

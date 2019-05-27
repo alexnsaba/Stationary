@@ -62,7 +62,7 @@ session_start();
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+ <header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -83,14 +83,28 @@ session_start();
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Uzabakiriho Viatori</span>
+              
+              <span class="hidden-xs">
+                
+                <?php
+        require_once'database.php';
+        $email=$_SESSION['email'];
+        $a= mysqli_query($con,"select * from user where email='$email' and type='Manager'");
+        $rw = mysqli_fetch_array($a);
+        echo $rw['name'];
+        echo'<img class="user-image" src="data:image;base64,'.$rw['photo'].'" >';
+        
+        ?>
+              </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+               <?php    
+        
+        echo'<img class="img-circle" src="data:image;base64,'.$rw['photo'].'" >';
+        
+        ?>
                 <p>
                   Manager
                   
@@ -98,11 +112,11 @@ session_start();
               </li>                          
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Log Out</a>
+                 <div class="pull-left">
+                  <a href="logout.php" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Cancel</a>
+                  <a href="#" class="btn btn-primary"><i class="fa fa-window-close" style="font-size:30px"></i> Cancel</a>
                 </div>
               </li>
             </ul>
@@ -127,10 +141,10 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-user"></i> Create Account</a></li>
-            <li><a href="#"><i class="fa fa-edit"></i> Edit Account</a></li>
-			<li><a href="#"><i class="fa fa-trash-o"></i> Delete Account</a></li>
-			<li><a href="#"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
+           <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
+            <li><a href="userEdit.php"><i class="fa fa-edit"></i> Edit Account</a></li>
+      <li><a href="userDel.php"><i class="fa fa-trash-o"></i> Delete Account</a></li>
+      <li><a href="users.php"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
           </ul>
 		  
         </li>
@@ -181,17 +195,21 @@ session_start();
           </ul>
 		  
         </li>
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-balance-scale"></i> <span>ACCOUNTING</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>       
-		</li>
+          </a>  
+            <ul class="treeview-menu">
+            <li class="active"><a href="accounts.php"><i class="fa fa-balance-scale"></i>Balance Cashier</a></li>
+         
+          </ul>     
+    </li>
 		
 		
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-line-chart"></i> <span>REPORTS</span>
             <span class="pull-right-container">
@@ -199,12 +217,12 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-pie-chart"></i>Daily Report</a></li>
-			<li><a href="#"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
-            <li><a href="#"><i class="fa fa-area-chart"></i> Annual Report</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i>Emmergency Report</a></li>			
+            <li class="active"><a href="dailyReport.php"><i class="fa fa-pie-chart"></i>Daily Report</a></li>
+      <li><a href="monthlyReport.php"><i class="fa fa-bar-chart-o (alias)"></i> Monthly Report</a></li>
+            <li><a href="annualReport.php"><i class="fa fa-area-chart"></i> Annual Report</a></li>
+          
           </ul>
-		  
+      
         </li>
 		
 		</ul>
@@ -234,7 +252,7 @@ session_start();
   echo"<tr>";
   echo"<th> <center>Expense Id</center></th>"; 
   echo"<th> <center>Expense Type</center> </th>";
-  echo"<th><center>Amount Spended</center></th>";
+  echo"<th><center>Amount Spent</center></th>";
   echo"<th><center>Date</center>  </th>";
  echo"<th><center>Person Responsible</center>  </th>";
   echo"</tr>";
@@ -254,7 +272,7 @@ session_start();
   echo"<tr>";
   echo"<th> <center>Expense Id</center></th>"; 
   echo"<th> <center>Expense Type</center> </th>";
-  echo"<th><center>Amount Spended</center></th>";
+  echo"<th><center>Amount Spent</center></th>";
   echo"<th><center>Date</center>  </th>";
  echo"<th><center>Person Responsible</center>  </th>";
   

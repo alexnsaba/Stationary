@@ -62,7 +62,7 @@ session_start();
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+<header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -141,7 +141,7 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-           <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
+            <li class="active"><a href="register.php"><i class="fa fa-user"></i> Create Account</a></li>
             <li><a href="userEdit.php"><i class="fa fa-edit"></i> Edit Account</a></li>
       <li><a href="userDel.php"><i class="fa fa-trash-o"></i> Delete Account</a></li>
       <li><a href="users.php"><i class="fa fa-newspaper-o"></i> View All Accounts</a></li>
@@ -149,7 +149,7 @@ session_start();
 		  
         </li>
 		
-		 <li class="active treeview">
+		  <li class="active treeview">
           <a href="#">
             <i class="fa fa-bank"></i> <span>PURCHASES/PRODUCTS</span>
             <span class="pull-right-container">
@@ -158,13 +158,13 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newProducts.php"><i class="fa fa-circle-o"></i> Stoke-In</a></li>           
-      <li><a href="availableProducts.php"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
-      <li><a href="productEdit.php"><i class="fa fa-edit"></i>Edit Products</a></li>    
-       </ul>
-      
+			<li><a href="availableProducts.php"><i class="fa fa-newspaper-o"></i>Products Available</a></li>
+			<li><a href="productEdit.php"><i class="fa fa-edit"></i>Edit Products</a></li>		
+		   </ul>
+		  
         </li>
-    
-     <li class="active treeview">
+		
+		 <li class="active treeview">
           <a href="#">
             <i class="fa fa-cc-mastercard"></i> <span>SALES</span>
             <span class="pull-right-container">
@@ -173,14 +173,14 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newTransaction.php"><i class="fa fa-plus"></i>New Transaction</a></li>
-      <li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
+			<li><a href="admin.php"><i class="fa fa-newspaper-o"></i> view Transactions</a></li>
             <li><a href="transactionEdit.php"><i class="fa fa-edit"></i> Edit Transaction</a></li>
-      <li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>     
+			<li><a href="transactionDel.php"><i class="fa fa-trash-o"></i>Delete Transaction</a></li>			
           </ul>
-      
+		  
         </li>
 		
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-usd"></i> <span>EXPENSES</span>
             <span class="pull-right-container">
@@ -189,11 +189,11 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="newExpense.php"><i class="fa fa-plus"></i>New Expense</a></li>
-			<li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
+      <li><a href="expenses.php"><i class="fa fa-newspaper-o"></i> view Expenses</a></li>
             <li><a href="expenseEdit.php"><i class="fa fa-edit"></i> Edit Expenses</a></li>
-			<li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>			
+      <li><a href="expenseDel.php"><i class="fa fa-trash-o"></i>Delete Expenses</a></li>     
           </ul>
-		  
+      
         </li>
 		 <li class="active treeview">
           <a href="#">
@@ -209,7 +209,7 @@ session_start();
     </li>
 		
 		
-		 <li class="active treeview">
+		<li class="active treeview">
           <a href="#">
             <i class="fa fa-line-chart"></i> <span>REPORTS</span>
             <span class="pull-right-container">
@@ -238,25 +238,19 @@ session_start();
     <!-- Main content -->
     <section class="content">
 	<!--Put your page content here-->
-    <h2>Enter Details of the new Expense</h2>  
-                <div class="panel-body"> 
+ 
+  
+  <h3>Enter the Email and click the Delete button</h3> 
+                <div class="panel-body">
+      <form method="post" action="userDel.php" name="registration" class="form-horizontal">
 
-  <form method="post" action="newExpense.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
-                      
-                    
-
-<div class="form-group">
-<label class="col-sm-2 control-label"> Expense Type  </label>
-<div class="col-sm-8">
-<input type="text" name="expType" id="expType"  class="form-control" placeholder="Eg Lunch, security, transport etc" required="required" >
-</div>
-</div>
 
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Expense Amount  </label>
+<label class="col-sm-2 control-label"> email </label>
 <div class="col-sm-8">
-<input type="number" name="exAmount" id="exAmount"  class="form-control" required="required" placeholder="Amount spended" >
+<input type="email" name="email" id="email"  class="form-control"  required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
 </div>
 </div>
 
@@ -265,41 +259,37 @@ session_start();
 
 <div class="col-sm-6 col-sm-offset-4">
 <input type="reset" value="Cancel" class="btn btn-primary">
-<input type="submit" name="Save" Value="Save" class="btn btn-primary">
-</div>
-</form>
 
-		
-  <center>
+<input type="submit" name="delete" Value="Delete" class="btn btn-primary">
+</div>
+</form><br/>
+<div>
+<?php
+if(isset($_POST['delete'])){
+          require_once'database.php';              
+             
+              $email=$_POST['email'];      
+               
+                
+           $d=mysqli_query($con,"delete from user where email='$email'");
+       
+              if($d){
+               echo"<br/><p style='color:blue;font-size:20pt'> <i class='fa fa-check'></i> The Account with Email ".$email." is deleted successfully</p>";
+              
+       }
+       else {       
+       echo"<br/><p style='color:blue;font-size:20pt'> <i class='fa fa-close'></i> Failed to delete the Account.</p>";
+       } 
+       mysqli_close($con);       
+       }   
+       
+?>
+   </div>
     
 
     </section>
     <!-- /.content -->
-     <?php
-// obtaining form parameters
-  if(isset($_POST['Save'])){
-  $expType = $_POST['expType'];
-  $exAmount = $_POST['exAmount'];
- 
-  date_default_timezone_set('Africa/Kampala');
-  $date = date('y/m/d'); 
-  $email = $_SESSION['email'];  
-  require_once'database.php';
-  $sel=mysqli_query($con,"select * from user where email='$email'");
-  $rw= mysqli_fetch_array($sel);
-  $name=$rw['name'];
-   
-   $a= mysqli_query($con,"insert into expense(expenseType,expenseAmount,date,ResponsilePerson) 
-    values('$expType','$exAmount','$date','$name')");
-   if($a){
-     echo'<h2 style="color:blue"> <i class="fa fa-check"></i>  Data is successfully Saved</h2>';
-   }
-   else{
-       echo'<h2 style="color:red"> <i class="fa fa-close"></i>  Sorry, the data could not be saved. Please try agin</h2>';
-   }
-
- }
-  ?>
+  
   </div>
  
   <!-- /.content-wrapper -->
